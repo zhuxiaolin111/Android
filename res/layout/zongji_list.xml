@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd"
+    >
+    <include layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#ddd">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#ddd"
+        >
+        <TextView
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:text="编号"/>
+        <TextView
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:text="姓名"/>
+        <TextView
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text="阀门状态"/>
+        <TextView
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text="面积"/>
+        <TextView
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text="欠费金额"/>
+        <TextView
+            android:layout_weight="0"
+            android:textColor="#000"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:background="#ddd">
+
+</LinearLayout>
+
+    <ListView
+        android:background="#ef674d"
+        android:id="@+id/zongji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    </ListView>
+
+
+
+
+</LinearLayout>

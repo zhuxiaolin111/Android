@@ -1,0 +1,158 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>扫一扫</title>
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		* { padding: 0; margin: 0}
+		.sao-wrap {
+			padding-top: 100px;
+		}
+		.sao {
+			width: 150px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		.sao img {
+			display: block;
+			width: 150px;
+		}
+		.sao p {
+			padding-top: 20px;
+			font-size: 16px;
+			color: #34a236;
+		}
+	</style>
+</head> 
+<body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jweixin-1.1.0.js"></script>
+	<script>
+	var hostname = window.location.host;
+	function showShade(){
+	    var shadow = document.createElement('div');
+	    shadow.id = 'shadow';
+	    $('body').append(shadow);
+	}
+	function hideShade(){
+	    $('#shadow').remove()
+	}
+
+	function showLoading(){
+	    showShade()
+	    var load = document.createElement('div');
+	    load.id = 'loading';
+	    load.innerHTML = '<img src="img/loading.png" height="66" width="66" class="load-img"><p> 正在加载...</p>';
+	    $('body').append(load);
+	}
+	function hideLoading(){
+	    hideShade()
+	    $('#loading').remove()
+	}
+	var $ajax = function (url, data, successfun){
+	    $.ajax({
+	        type: "POST",
+	        url: url,
+	        dataType: "json",
+	        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+	        data: data,
+	        timeout: 20000000,
+	        success: function(e){
+	            successfun(e);
+	        },
+	        error: function(e){
+	            alert('网络异常，请稍候再试')
+	        }
+	    })
+	}
+	var userid = args().userid;
+	var agentid = args().agentid;
+	var userinfo;
+	var data = {
+		method: 'getpersoninfo',
+		userid: userid,
+		agentid: agentid,
+		isweixin: 1
+	}
+	showLoading()
+	$ajax('http://'+hostname+'/weixinservice.ashx', data, function(res2){
+		localStorage.userinfo = JSON.stringify(res2)
+		userinfo = res2;
+		var d = {
+			method: 'getjssdk',
+	        url: window.location.href,
+	        isweixin: 1
+		}
+	    $ajax('http://'+hostname+'/weixinservice.ashx', d, function(res){
+			wx.config({
+	            debug: false,
+	            appId: res.corpid,
+	            timestamp: res.timestamp,
+	            nonceStr: res.noncestr,
+	            signature: res.signature,
+	            jsApiList: [
+	                'scanQRCode'
+	            ]
+	        });
+		})
+	})
+
+	wx.error(function(res){
+		alert(JSON.stringify(res));
+	})
+	wx.ready(function() {
+		setTimeout(sao(), 500)
+	})
+	function sao(){
+        hideLoading();
+		wx.scanQRCode({
+		    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+		    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+		    success: function (res) {
+			    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+			    var data2 = {
+			    	method: 'getwarmuserinfo',
+			    	companyname: userinfo[0].companyname,
+			    	qrcodevalue: result
+			    }
+			    $ajax('http://www.eheat.com.cn/wechatservice.ashx', data2, function(res){
+			    	if(res.errmsg){
+			    		alert(res.errmsg);
+			    		return;
+			    	}
+			    	localStorage.saoData = JSON.stringify(res);
+			    	localStorage.isSao = 1;
+			    	window.location.href = 'http://'+hostname+'/check/checkinfo.html'
+			    })
+			}
+		});
+	}
+	function args() {
+	    var s = location.href;
+	    var o = new Object();
+	    var i = s.indexOf("?");
+	    if (i > 0) {
+	        s = s.substring(i + 1, s.length);
+	        i = s.indexOf("#");
+	        if (i > 0) {
+	            o.page = s.substring(i + 1, s.length);
+	            s = s.substring(0, i);
+	        }
+	        var params = s.split("&");
+	        for (var x = 0; x < params.length; x++) {
+	            var a = params[x].indexOf("=");
+	            var k = params[x].substring(0, a);
+	            var v = unescape(params[x].substring(a + 1, params[x].length));
+	            o[k] = v;
+	        }
+	    }
+	    return o;
+	}
+
+	
+	</script>
+</body>
+</html>
+

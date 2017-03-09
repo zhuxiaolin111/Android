@@ -1,0 +1,16 @@
+﻿<div ng-controller="listCtrl">
+	<div class="no-data" ng-if="list.length == 0">
+		<p>暂无结果</p>
+	</div>
+	<div class="no-data" ng-if="list.length > 0">
+		<p>请点击选择一个稽查记录发送视频</p>
+	</div>
+	<ul class="query-result" ng-if="list.length > 0">
+		<li ng-repeat="li in list" ng-click="addMedia(li)">
+			<p class="left">
+				<span>{{li.C_EnrolAddress}}</span>{{li.C_Item}}
+			</p>
+			<p class="right">{{li.D_Date}}</p>
+		</li>
+	</ul>
+</div>

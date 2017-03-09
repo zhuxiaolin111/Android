@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html ng-app="checkInfo">
+<head>
+    <meta charset="UTF-8">
+    <title>内容详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/weui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="checkInfoCtrl">
+    <div>
+        <div class="buildHeader" ng-if="hostname=='syhf.eheat.com.cn'"><a href="javascript:history.go(-1);">返回</a></div>
+        <div class="query-tit">房间信息：<span ng-bind="room.C_EnrolAddress"></span></div>
+        <div class="item">
+            <div class="item-label">房间编号</div>
+            <div class="item-con"><span ng-bind="room.C_RoomNum"></span></div>
+        </div>
+        <div class="item">
+            <div class="item-label">业主名称</div>
+            <div class="item-con"><span ng-bind="room.C_OwnerName"></span></div>
+        </div>
+        <div class="item">
+            <div class="item-label">用户卡号</div>
+            <div class="item-con"><span ng-bind="room.C_CardNum"></span></div>
+        </div>
+        <div class="item" ng-if="hostname!='syhf.eheat.com.cn'">
+            <div class="item-label">联系方式</div>
+            <div class="item-con"><span ng-bind="room.C_Touch1"></span></div>
+        </div>
+        <div class="item">
+            <div class="item-label">供暖面积</div>
+            <div class="item-con"><span ng-bind="room.M_UseArea"></span>㎡</div>
+        </div>
+         <div class="item">
+            <div class="item-label">建筑面积</div>
+            <div class="item-con"><span ng-bind="room.M_Area"></span>㎡</div>
+        </div>
+         <div class="item">
+            <div class="item-label">房间朝向</div>
+            <div class="item-con"><span ng-bind="room.C_Direction"></span></div>
+        </div>
+        <div class="item" ng-if="hostname!='pyrl.eheat.com.cn' && hostname!='syhf.eheat.com.cn'">
+            <div class="item-label">开停状态</div>
+            <div class="item-con"><span ng-bind="room.C_Mark"></span></div>
+        </div>
+         <div class="item" ng-if="hostname=='syhf.eheat.com.cn'">
+            <div class="item-label">业务状态</div>
+            <div class="item-con"><span ng-bind="room.C_Mark"></span></div>
+        </div>
+        <div class="item" ng-if="hostname=='pyrl.eheat.com.cn'">
+            <div class="item-label">缴费状态</div>
+            <div class="item-con"><span ng-if="room.M_Total==0">已交费</span><span ng-if="room.M_Total!=0">未交费</span></div>
+        </div>
+        <div class="item">
+            <div class="item-label">稽查记录</div>
+            <a href="app.html#/checkRecord/{{room.I_RoomID}}" class="item-con" style="background: url(img/r.png) no-repeat right center; -webkit-background-size: 10px;
+            background-size: 10px;" ng-if="room.PeccantCount > 0"><span ng-bind="room.PeccantCount"></span>次</a>
+            <a href="javascript:;" class="item-con" style="background: url(img/r.png) no-repeat right center; -webkit-background-size: 10px;
+            background-size: 10px;" ng-if="room.PeccantCount == 0"><span ng-bind="room.PeccantCount"></span>次</a>
+        </div>
+         <div class="item">
+            <div class="item-label">停断附件</div>
+            <div class="item-con"><a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" ng-click="lookThis()">查看</a></div>
+        </div>
+        <div class="query-tit">稽查操作</div>
+         <div class="item" id="qzdgnewd" style="display:none">
+            <div class="item-label">强制断管</div>
+            <div class="item-con" style="padding:0">
+               <button ng-click="doqzdg()" class="qzdgStyle">下达工单</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-label">稽查项目</div>
+            <div class="item-con">
+                <select class="select" ng-model="jcItem" ng-options="item.c_peccancyName for item in items" ng-change="jcxmChange()">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+         <div class="item" id="normLb">
+            <div class="item-label">稽查类别</div>
+            <div class="item-con">
+                <select class="select" ng-model="jcType" ng-options="item.c_peccancyType for item in types">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+        <div class="item" id="normBz">
+            <div class="item-label">稽查备注</div>
+            <div class="item-con">
+                <textarea rows="3" class="text" ng-model="remark" placeholder="请填写备注信息"></textarea>
+            </div>
+        </div>
+        <!--沈阳华发需求 start-->
+         <div class="item" id="syhfLb" style="display: none;">
+            <div class="item-label">稽查类别</div>
+            <div class="item-con">
+                <select class="select" ng-model="jcType" ng-change="changeJC()" >
+                    <option value="{{item.c_peccancyType}}" ng-repeat="item in types">{{item.c_peccancyType}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="item" id="syhfBz" style="display: none;">
+            <div class="item-label">稽查备注</div>
+            <div class="item-con">
+                <a href="javascript:;" style="position: absolute;right: 10px" class="weui_btn weui_btn_mini weui_btn_primary" ng-click="fastWrite()">快捷备注</a>
+                <textarea rows="3" class="text" ng-model="remark" placeholder="请填写备注信息" style="width: 65%;color: #666;padding: 5px 0 5px 2px"></textarea>
+            </div>
+        </div>
+         <!--沈阳华发 end-->
+         <div class="item">
+            <div class="item-con" style="display:block">
+                 <div class="add-img2" id="mediaid_01">图片一</div>
+                 <div class="up-img2" id="mediaid_01Img" style="display:none"></div>
+            </div>
+            <div class="item-con" style="display:block">
+                 <div class="add-img2" id="mediaid_02">图片二</div>
+                 <div class="up-img2" id="mediaid_02Img" style="display:none"></div>
+            </div>
+            <div class="item-con" style="display:block">
+                 <div class="add-img2" id="mediaid_03">图片三</div>
+                 <div class="up-img2" id="mediaid_03Img" style="display:none"></div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="choose-item">
+                <img src="img/cVideo.gif" ng-click="chooseVideo()">
+                <span>视频</span>
+            </div>
+            <div class="choose-item">
+                <img src="img/cPosition.gif" ng-click="choosePosition()">
+                <span>位置</span>
+            </div>
+        </div>
+        <div class="btn-box">
+            <button class="btn" ng-click="submit()">提 交</button>
+        </div>
+        <div class="qzbg" style="display:none"></div>
+        <div class="qzdgFixCon" style="display:none">
+            <h1>强制断管工单</h1>
+            <input type="text" value="请选择服务班组" class="fwdTitle" id="fwdText">
+            <select class="qzdgrepaiSel" id="qdsel">
+                <option value="">请选择维修人员</option>
+                <option value="{{nt.id}}" ng-repeat="nt in repairList">{{nt.name}}</option>
+            </select>
+            <textarea ng-model="dgText" placeholder="请输入工单描述"></textarea>
+            <button ng-click="dgsub()">提交</button>
+        </div>
+         <ul class="banzuFixed">
+           <li ng-repeat="task in fuwuList" ng-click="nchange(task)"><label><input type="radio" name="fuwu" value="{{task.id}}"><span ng-bind="task.C_Name"></span></label></li>
+         </ul>
+
+
+
+<!--快捷备注-->
+<div class="weui-skin_android" id="androidActionsheet" style="display: none;">
+    <div class="weui-mask" id="adrBg"></div>
+    <div class="weui-actionsheet">
+        <div class="weui-actionsheet__menu">
+            <div class="weui-actionsheet__cell" ng-repeat="fast in fastlist" ng-click="writeIt(fast)">{{fast.name}}</div>
+        </div>
+    </div>
+</div>
+<!--快捷备注-->
+
+    </div>
+<div id="showPic">
+    <p id="noPhoto">暂无附件</p>
+</div>
+<a href="javascript:;"  id="closePic" >取&nbsp;&nbsp;消</a>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-route.js"></script>
+    <script src="js/lib/angular-sanitize.min.js"></script>
+    <script src="js/jweixin-1.1.0.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+   
+</body>
+</html>

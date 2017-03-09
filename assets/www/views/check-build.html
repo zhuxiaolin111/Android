@@ -1,0 +1,111 @@
+﻿<div ng-controller="checkBuildCtrl">
+	<div class="build-top">
+		<div class="build-tips" id="types">
+			<span>停<i class="b-stop"></i></span>
+			<span>断<i class="b-break"></i></span>
+			<span>欠费<i class="b-move"></i></span>
+			<span>缴费户<dfn class="b-jf"></dfn></span>
+			<span>欠费户<dfn class="b-qf"></dfn></span>
+		</div>
+	</div>
+	<div class="build-con">
+		<div class="build" style="display: block">
+			<div class="build-table clearfix">
+				<div class="room" ng-repeat="room in roomList" ng-style="{top: (room.y-1)*30, left: (room.x-1)*110}" ng-if="room.y <= maxY && room.x <= maxX">
+					<span class="{{room.bgclass}}" ng-click="goInfo(room)" ng-if="room.C_RoomNum !=''">
+						<dfn class="jc-num" ng-if="room.I_JiCha > 0">稽{{room.I_JiCha}}</dfn>
+						<dfn class="b-jf" ng-if="room.M_Total == 0"></dfn>
+						<dfn class="b-qf" ng-if="room.M_Total != 0"></dfn>
+						{{room.C_RoomNum}}({{room.C_OwnerName}})
+					</span>
+					<span ng-if="room.C_RoomNum == ''"></span>
+				</div>
+			</div>
+			<div class="not-in">
+				<span ng-repeat="room in roomList" class="{{room.bgclass}}" ng-if="room.y > maxY || room.x > maxX" ng-click="goInfo(room)">{{room.C_RoomNum}}({{room.C_OwnerName}})</span>
+			</div>
+		</div>
+		<div class="build">
+			<div class="build-table clearfix">
+				<div class="room" ng-repeat="room in roomList" ng-style="{top: (room.y-1)*30, left: (room.x-1)*110}" ng-if="room.y <= maxY && room.x <= maxX">
+					<span class="{{room.bgclass}}" ng-click="goInfo(room)" ng-if="room.C_Mark == '停' &&room.C_RoomNum !=''">
+						<dfn class="jc-num" ng-if="room.I_JiCha > 0">稽{{room.I_JiCha}}</dfn>
+						<dfn class="b-jf" ng-if="room.M_Total == 0"></dfn>
+						<dfn class="b-qf" ng-if="room.M_Total != 0"></dfn>
+						{{room.C_RoomNum}}({{room.C_OwnerName}})
+					</span>
+					<span ng-if="room.C_RoomNum == ''"></span>
+				</div>
+			</div>
+			<div class="not-in">
+				<span ng-repeat="room in roomList" class="{{room.bgclass}}" ng-if="(room.y > maxY || room.x > maxX) && room.C_Mark == '停'" ng-click="goInfo(room)">{{room.C_RoomNum}}({{room.C_OwnerName}})</span>
+			</div>
+		</div>
+		<div class="build">
+			<div class="build-table clearfix">
+				<div class="room" ng-repeat="room in roomList" ng-style="{top: (room.y-1)*30, left: (room.x-1)*110}" ng-if="room.y <= maxY && room.x <= maxX">
+					<span class="{{room.bgclass}}" ng-click="goInfo(room)" ng-if="room.C_Mark == '断' &&room.C_RoomNum !=''">
+						<dfn class="jc-num" ng-if="room.I_JiCha > 0">稽{{room.I_JiCha}}</dfn>
+						<dfn class="b-jf" ng-if="room.M_Total == 0"></dfn>
+						<dfn class="b-qf" ng-if="room.M_Total != 0"></dfn>
+						{{room.C_RoomNum}}({{room.C_OwnerName}})
+					</span>
+					<span ng-if="room.C_RoomNum == ''"></span>
+				</div>
+			</div>
+			<div class="not-in">
+				<span ng-repeat="room in roomList" class="{{room.bgclass}}" ng-if="(room.y > maxY || room.x > maxX) && room.C_Mark == '断'" ng-click="goInfo(room)">{{room.C_RoomNum}}({{room.C_OwnerName}})</span>
+			</div>
+		</div>
+		<div class="build">
+			<div class="build-table clearfix">
+				<div class="room" ng-repeat="room in roomList" ng-style="{top: (room.y-1)*30, left: (room.x-1)*110}" ng-if="room.y <= maxY && room.x <= maxX">
+					<span class="{{room.bgclass}}" ng-click="goInfo(room)" ng-if="room.M_Total != 0 &&room.C_RoomNum !=''">
+						<dfn class="jc-num" ng-if="room.I_JiCha > 0">稽{{room.I_JiCha}}</dfn>
+						<dfn class="b-jf" ng-if="room.M_Total == 0"></dfn>
+						<dfn class="b-qf" ng-if="room.M_Total != 0"></dfn>
+						{{room.C_RoomNum}}({{room.C_OwnerName}})
+					</span>
+					<span ng-if="room.C_RoomNum == ''"></span>
+				</div>
+			</div>
+			<div class="not-in">
+				<span ng-repeat="room in roomList" class="{{room.bgclass}}" ng-if="(room.y > maxY || room.x > maxX) && room.M_Total != 0" ng-click="goInfo(room)">{{room.C_RoomNum}}({{room.C_OwnerName}})</span>
+			</div>
+		</div>
+	</div>
+	<div class="build-bottom">
+		<div class="check-type" ng-click="goCheckList()">
+			<img src="img/lb-icon.png" width="18" height="">
+			列表模式
+		</div>
+		<div class="check-type" ng-click="moreOpt()">
+			<img src="img/more.png" width="18">
+			<span ng-bind="more"></span>
+		</div>
+	</div>
+	<div class="more-opt" id="more">
+		<div class="more-btn">
+			<span ng-click="close()">关闭</span>
+		</div>
+		<ul>
+			<li>
+				<span>供暖年度</span>
+				<p ng-click="changeYear()">请选择供暖年度</p>
+			</li>
+			<li>
+				<span>显示单元</span>
+				<p ng-click="changeCell()">请选择显示单元</p>
+			</li>
+		</ul>
+	</div>
+	<ul class="chargeYear" id="chargeYear">
+		<li class="tit">请选择供暖年度</li>
+		<li ng-repeat="y in years" ng-bind="y.ChargeYear" ng-click="chooseYear(y)"></li>
+	</ul>
+	<ul class="chargeYear" id="cellList">
+		<li class="tit">请选择单元</li>
+		<li ng-click="chooseCellAll()">全部单元</li>
+		<li ng-repeat="c in roomCells" ng-bind="c+'单元'" ng-click="chooseCell(c)"></li>
+	</ul>
+</div>

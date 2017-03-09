@@ -1,0 +1,16 @@
+﻿<div ng-controller="queryResultCtrl">
+	<div class="result-num">
+		<p ng-repeat="c in count">{{c.C_Item}}：{{c.I_PeccantCount}}</p>
+	</div>
+	<div class="no-data" ng-if="results.length == 0" style="padding-top:65px">
+		<p>暂无结果</p>
+	</div>
+	<ul class="query-result" ng-if="results.length > 0">
+		<li ng-repeat="res in results" ng-click="lookthis(res)">
+			<p class="left">
+				<span>{{res.C_EnrolAddress}}</span>{{res.C_Item}}
+			</p>
+			<p class="right">{{res.D_Date}}</p>
+		</li>
+	</ul>
+</div>

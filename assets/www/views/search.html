@@ -1,0 +1,39 @@
+﻿<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+<div ng-controller="searchCtrl">
+	<div class="search-top">
+		<!-- <div class="type-tab search-type">
+			<div class="type-item">
+				<p ng-click="changeType(0)" ng-show="type != 0">小区名称</p>
+				<p class="current" ng-show="type == 0">小区名称</p>
+			</div>
+			<div class="type-item">
+				<p ng-click="changeType(1)" ng-show="type != 1">大楼名称</p>
+				<p class="current" ng-show="type == 1">大楼名称</p>
+			</div>
+			<div class="type-item">
+				<p ng-click="changeType(2)" ng-show="type != 2">房间卡号</p>
+				<p class="current" ng-show="type == 2">房间卡号</p>
+			</div>
+		</div> -->
+		<div class="search" style="border-bottom:1px dashed #ccc">
+			<input type="text" ng-model="bushuSel" placeholder="请选择部署条件" style="text-align:center;color:#41d23f" readonly ng-click="selBx()">
+		</div>
+		<div class="search">
+			<input type="text" ng-model="searchName" placeholder="请输入搜索内容">
+			<button ng-click="search(searchName)">搜索</button>
+		</div>
+	</div>
+	<ul id="bushuMenu">
+		<li ng-repeat="a in bulists">
+			<a href="javascript:;" ng-click="selt(a)">{{a.name}}</a>
+		</li>
+	</ul>
+	<ul class="search-list">
+		<div class="no-data" ng-if="buildings.length == 0">
+			<p>暂无结果</p>
+		</div>
+		<li ng-repeat="build in buildings" ng-click="goList(build)">{{build.Name}}</li>
+	</ul>
+</div>
+

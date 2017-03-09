@@ -1,0 +1,22 @@
+﻿<div ng-controller="queryCtrl">
+	<div class="query-tit">查询条件</div>
+	<div class="item">
+		<div class="item-con">
+			<div class="query-date">
+				<input type="text" id="beginDate" readonly>
+				<input type="text" id="endDate" readonly>
+			</div>
+		</div>
+	</div>
+	<div class="item">
+		<div class="item-label">稽查项目</div>
+		<div class="item-con">
+			<select class="select" ng-model="jcItem" ng-options="item.c_peccancyName for item in items">
+                <option value="">全部</option>
+            </select>
+		</div>
+	</div>
+	<div class="btn-box">
+		<button class="btn" ng-click="query()">查 询</button>
+	</div>
+</div>

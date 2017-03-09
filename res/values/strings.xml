@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">华发稽查</string>
+    <string name="launcher_name">@string/app_name</string>
+    <string name="activity_name">@string/launcher_name</string>
+    <string name="往年停供数数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="稽查项目数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="稽查类别数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="楼座内客户信息数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="上传数据接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="公司名称">"沈阳华发热力有限公司"</string>
+    <string name="测试">"辽宁北软测试"</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>

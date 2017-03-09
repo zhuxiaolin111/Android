@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.huafa.lixianjicha" version="1.0.0"
+        xmlns="http://www.w3.org/ns/widgets">
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin"/>
+        <param name="onload" value="true"/>
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device"/>
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen"/>
+        <param name="onload" value="true"/>
+    </feature>
+    <feature name="sendJSMessagePlugin">
+        <param name="android-package"
+               value="org.apache.cordova.plugin.sendJSMessagePlugin.SendJSMessage"/>
+    </feature>
+    <feature name="sendJSMessagePlugin1">
+        <param name="android-package"
+               value="org.apache.cordova.plugin.sendJSMessagePlugin.SendJSMessage1"/>
+    </feature>
+    <name>huafa</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html"/>
+    <allow-intent href="*"/>
+    <access origin="*"/>
+    <allow-navigation href="http://*/*"/>
+    <allow-navigation href="https://*/*"/>
+    <allow-navigation href="data:*"/>
+    <allow-intent href="market:*"/>
+    <preference name="loglevel" value="DEBUG"/>
+</widget>

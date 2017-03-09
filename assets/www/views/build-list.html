@@ -1,0 +1,20 @@
+﻿<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+<div ng-controller="buildListCtrl">
+	<div class="buildHeader" ng-if="hostname=='syhf.eheat.com.cn'"><a href="javascript:history.go(-1);">返回</a></div>
+	<div class="no-data" ng-if="list.length == 0">
+		<p>暂无大楼</p>
+	</div>
+	<ul class="build-list" ng-if="list.length > 0">
+		<li class="hd">
+			<p>大楼名称</p>
+			<p>停供户</p>
+			<p>欠费户</p>
+		</li>
+		<li ng-repeat="b in list" ng-click="goInfo(b)">
+			<p ng-bind="b.Name"></p>
+			<p ng-bind="b.I_StopCount"></p>
+			<p ng-bind="b.I_AccountCount"></p>
+		</li>
+	</ul>
+</div>

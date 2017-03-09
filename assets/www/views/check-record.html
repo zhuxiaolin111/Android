@@ -1,0 +1,28 @@
+﻿<div ng-controller="checkRecordCtrl">
+	<div class="query-tit">稽查记录</div>
+	<div ng-repeat="r in list">
+		<div class="item">
+			<div class="item-label">稽查时间</div>
+			<div class="item-con"><span ng-bind="r.D_Date"></span></div>
+		</div>
+		<div class="item">
+			<div class="item-label">稽查内容</div>
+			<div class="item-con"><span ng-bind="r.C_Item"></span></div>
+		</div>
+		<div class="item">
+			<div class="item-label">稽查员</div>
+			<div class="item-con"><span ng-bind="r.C_PeccancyPerson"></span></div>
+		</div>
+		<div class="item">
+			<div class="item-label">稽查备注</div>
+			<div class="item-con"><span ng-bind="r.C_PeccancyRemark"></span></div>
+		</div>
+		<div class="item">
+			<div class="item-label">附件</div>
+			<div class="item-con"><a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" ng-click="lookThis(r)">查看</a></div>
+		</div>
+		<div style="height: 10px; background: #eee"></div>
+	</div>
+</div>
+<div id="showPic"></div>
+<a href="javascript:;"  id="closePic" >取&nbsp;&nbsp;消</a>

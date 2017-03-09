@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/listView_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/bianhao"
+        android:textColor="#fff"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/xingming"
+        android:textColor="#fff"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/famenzhuangtai"
+        android:layout_width="0dp"
+        android:textColor="#fff"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lala"
+        />
+    <TextView
+        android:id="@+id/mianji"
+        android:layout_width="0dp"
+        android:textColor="#fff"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/qianfeijine"
+        android:layout_width="0dp"
+        android:textColor="#fff"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/fangjianhao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:text="1"/>
+    <TextView
+        android:id="@+id/youwubianhua"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:text="1"/>
+
+
+</LinearLayout>

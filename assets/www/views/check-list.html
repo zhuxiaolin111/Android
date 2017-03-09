@@ -1,0 +1,102 @@
+﻿<div ng-controller="checkListCtrl">
+	<style ng-if="hostname=='syhf.eheat.com.cn'">
+		.build-tips span .checked:after{
+			border-left: 3px solid #fff;
+  			border-bottom: 3px solid #fff;
+		}
+		.build-bottom .check-type{
+			width: 33.3%;
+			font-size: 14px
+		}
+		.bulidAhs{
+			width: 100%;
+			margin-top: 5px;
+			font-size: 12px;
+			float: left;
+		}
+		.build-tips{
+			padding: 5px 0.15rem;
+		}
+		.room-wrap{
+			padding-top: 120px
+		}
+		.bulidAhs div{
+			width: 50%;
+			float: left;
+		}
+		.build-top{
+			top: 32px;
+		}
+		.buildHeader{
+			position: fixed;
+			top:0;
+			left:0;
+		}
+	</style>
+	<div class="buildHeader" ng-if="hostname=='syhf.eheat.com.cn'"><a href="javascript:history.go(-1);">返回</a></div>
+	<div class="build-top">
+		<div class="build-tips" id="types">
+			<span>停<i class="b-stop"></i></span>
+			<span>断<i class="b-break"></i></span>
+			<span>欠费<i class="b-arrearage"></i></span>
+		</div>
+		<div class="build-tips" id="types2" style="display: none;">
+			<span>停供<i class="c-stop"></i></span>
+			<span>恢复<i class="c-do"></i></span>
+			<span>强制断管<i class="c-dg"></i></span>
+			<div class="bulidAhs"><div>总户数：<em id="alluser"></em></div><div>今年停供数：<em id="ttguser"></em></div><div>今年恢复供热数：<em id="tnhfuser"></em></div><div>往年停供数：<em id="wntguser"></em></div></div>
+		</div>
+	</div>
+	
+	<div class="room-wrap">
+		<div class="no-data" ng-if="list.length == 0">
+			<p>暂无用户</p>
+		</div>
+		<ul class="check-list" ng-if="list.length > 0">
+			<li class="hd">
+				<p>编号</p>
+				<p>姓名</p>
+				<p ng-if="hostname!=pyrl.eheat.com.cn">阀门状态</p>
+				<p ng-if="hostname==pyrl.eheat.com.cn">交费状态</p>
+				<p>面积</p>
+				<p>欠费金额</p>
+			</li>
+			<li ng-repeat="room in list" ng-click="goInfo(room)" class="{{room.bgclass}}">
+				<p ng-bind="room.C_RoomNum"></p>
+				<p ng-bind="room.C_OwnerName"></p>
+				<p ng-bind="room.C_Mark" ng-if="hostname!=pyrl.eheat.com.cn"></p>
+				<p ng-if="hostname==pyrl.eheat.com.cn && room.M_Total==0">已交费</p>
+				<p ng-if="hostname==pyrl.eheat.com.cn && room.M_Total!=0">未交费</p>
+				<p ng-bind="room.M_UseArea"></p>
+				<p ng-bind="room.M_Total"></p>
+			</li>
+		</ul>
+	</div>
+	<div class="build-bottom" ng-if="hostname!='syhf.eheat.com.cn'">
+		<div class="check-type" ng-click="goCheckBulid()">
+			<img src="img/build-icon.png" width="15" height="15">
+			楼图模式
+		</div>
+		<div class="check-type">
+			<p ng-click="changeYear()">年度：<span ng-bind="nowYear.ChargeYear"></span></p>
+		</div>
+	</div>
+	<div class="build-bottom" ng-if="hostname=='syhf.eheat.com.cn'">
+		<div class="check-type" ng-click="goCheckBulid()">
+			楼图模式
+		</div>
+		<div class="check-type" ng-click="getOtherYear()" id="otherY">
+			往&nbsp;&nbsp;年
+		</div>
+		<div class="check-type" ng-click="getToYear()" id="otherD" style="display: none;">
+			今&nbsp;&nbsp;年
+		</div>
+		<div class="check-type" ng-click="goallYear()">
+			总&nbsp;&nbsp;计
+		</div>
+	</div>
+	<ul class="chargeYear">
+		<li class="tit">请选择供暖年度</li>
+		<li ng-repeat="y in years" ng-bind="y.ChargeYear" ng-click="chooseYear(y)"></li>
+	</ul>
+</div>

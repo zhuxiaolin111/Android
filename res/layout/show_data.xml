@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/xingming_data"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textColor="#000"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/type_data"
+        android:layout_width="0dp"
+        android:textColor="#000"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+    <TextView
+        android:id="@+id/item_data"
+        android:layout_width="0dp"
+        android:textColor="#000"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lala"
+        />
+    <TextView
+        android:id="@+id/roomid_data"
+        android:layout_width="0dp"
+        android:textColor="#000"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="lalala"
+        />
+
+
+
+</LinearLayout>
