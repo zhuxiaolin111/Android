@@ -37,15 +37,30 @@ import okhttp3.Response;
  */
 
 public class Show_Tijiao_Data extends baseActivty {
+  /*  Handler handler = new android.os.Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                for (int i = 0; i < result_arr.size() ; i++) {
+                String s=result_arr.get(i);
+                    if(!s.equals(0)){
+                        Toast.makeText(Show_Tijiao_Data.this, "第"+i+1+"条数据提交失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };*/
 
+    private tijiao_result_model mTijiao_result_model;
+    private int result_i;
+    private String result_str;
+    private ArrayList<String> result_arr;
 
     private ListView show_data_list;
     private Cursor cursor;
 
     //提交全部数据按钮
     private Button tijiaoquanbushuju;
-    //查询上一次稽查记录
-    private Button shangyicijichajilu;
 
     private DBManager mgr;
 
@@ -63,35 +78,29 @@ public class Show_Tijiao_Data extends baseActivty {
     private ArrayList<String> image3_arrayList = new ArrayList<>();
     private ArrayList<String> operator_arrayList = new ArrayList<>();
     LocationManager locationManager;
-    private tijiao_result_model mTijiao_result_model;
+
 
     @Override
     protected void initContentView(Bundle savedInstanceState) {
         // super.onCreate(savedInstanceState);
         setContentView(R.layout.show_tijiao_data);
+
+        //实体化DBManager
+        mgr = new DBManager(this);
         // 启动服务
         Intent intent = new Intent(this, LocationService.class);
         startService(intent);
 
-        //实体化DBManager
-        mgr = new DBManager(this);
 
         tijiaoquanbushuju = (Button) findViewById(R.id.tijiaoquanbushuju_btn);
-      /*  shangyicijichajilu = (Button) findViewById(R.id.chaxunshangyicishuju_btn);
-        shangyicijichajilu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Show_Tijiao_Data.this, shangYiCiJiChaJiLu.class);
-                startActivity(i);
-                finish();
-            }
-        });*/
+
         //设置提交数据按钮的点击事件
         tijiaoshuju();
 
         //取得每行的集合cursor
         //cursor为所有"shifoujicha"的值为"no"的行
         cursor = mgr.search("no", "shifoujicha");
+
         //将查询出来的数据存进该页的ListView中
         put_data_into_listview();
 
@@ -100,9 +109,7 @@ public class Show_Tijiao_Data extends baseActivty {
 
     //设置本页的ListView
     private void put_data_into_listview() {
-
         List<Map<String, String>> listItems = new ArrayList<>();
-
         //光标逐个下移,遍历Cursor,并将数据存入ListView
         while (cursor.moveToNext()) {
             Map<String, String> item = new HashMap<>();
@@ -120,9 +127,9 @@ public class Show_Tijiao_Data extends baseActivty {
         list.setAdapter(simpleadapter);
     }
 
+
     //通过接口上传数据
     public void shangchuanshuju() {
-
         //搜索所有"shifoujicha"值是"no"的
         Cursor c = mgr.search("no", "shifoujicha");
         while (c.moveToNext()) {
@@ -154,7 +161,7 @@ public class Show_Tijiao_Data extends baseActivty {
                 }
                 RequestBody formbody = new FormBody.Builder()
                         .add("method", "JC_WebSupervise")
-                        .add("Company", getString(R.string.测试))
+                        .add("Company", getString(R.string.公司名称))
                         .add("RoomID", roomid_arrayList.get(i))
                         .add("Num", "")
                         .add("Type", type_arrayList.get(i))
@@ -169,8 +176,8 @@ public class Show_Tijiao_Data extends baseActivty {
                         .add("ext1", ext1)
                         .add("ext2", ext2)
                         .add("ext3", ext3)
-                        .add("Longitude", String.valueOf(Common.latitude))
-                        .add("Latitude", String.valueOf(Common.longitude))
+                        .add("Latitude", String.valueOf(Common.latitude))
+                        .add("Longitude", String.valueOf(Common.longitude))
                         .add("Operator", operator_arrayList.get(i))
                         .build();
                 Request request = new Request.Builder()
@@ -186,12 +193,27 @@ public class Show_Tijiao_Data extends baseActivty {
 
                     @Override
                     public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                      String str = response.body().string();
-                        Log.d("result", str);
+                        result_str = response.body().string();
+                        Log.d("result",result_str);
+               /*         mTijiao_result_model = JSON.parseObject(result_str, tijiao_result_model.class);
+                        result_i = mTijiao_result_model.getData().size();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < result_i; i++) {
+                                    result_arr.add(mTijiao_result_model.getData().get(i).getResult_code());
+                                    Log.d("result", result_str);
+                                }
+                                //做一个Handle,已在数据请求完以后更新4个显示基础数据的按钮
+                                Message message = new Message();
+                                message.what = 1;
+                                handler.sendEmptyMessage(1);
+                            }
+                        });*/
+
                     }
                 });
             }
-
             new AlertDialog.Builder(Show_Tijiao_Data.this)
                     .setTitle("温馨提示")
                     .setIcon(android.R.drawable.ic_dialog_info)
@@ -200,6 +222,8 @@ public class Show_Tijiao_Data extends baseActivty {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //销毁页面
+                            //将数据库中的已提交的数据的"shifoujicha"项的"no"值改为"yes"
+                            mgr.update_isflag();
                             finish();
                         }
                     })
@@ -220,7 +244,6 @@ public class Show_Tijiao_Data extends baseActivty {
                     .show();
 
         }
-
     }
 
     //设置提交数据的点击事件
@@ -231,26 +254,8 @@ public class Show_Tijiao_Data extends baseActivty {
                 if (isNetworkAvailable(this)) {
                     //获取当前经纬度坐标
                     //   get_jingdu_And_Weidu();
-
                     //提交数据
                     shangchuanshuju();
-                    //将数据库中的已提交的数据的"shifoujicha"项的"no"值改为"isflag"
-                    mgr.update_isflag();
-
-                 /*   //弹出提示框,提示是否提交数据
-                    new AlertDialog.Builder(Show_Tijiao_Data.this)
-                            .setTitle("注意")
-                            .setIcon(android.R.drawable.ic_dialog_info)
-                            .setMessage("是否确定提交数据（提交后该列表中将不再显示已提交的数据，如要更改已提交数据，请重新稽查并再次点击提交）")
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .show();*/
-
                 } else {
                     new AlertDialog.Builder(Show_Tijiao_Data.this)
                             .setTitle("注意")
@@ -266,8 +271,6 @@ public class Show_Tijiao_Data extends baseActivty {
                             .setNegativeButton("取消", null)
                             .show();
                 }
-
-
             }
         });
     }
@@ -294,4 +297,5 @@ public class Show_Tijiao_Data extends baseActivty {
         finish();
         return true;
     }
+
 }

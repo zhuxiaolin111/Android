@@ -7,9 +7,10 @@ import java.util.List;
  */
 
 public class tijiao_result_model {
+
     private String result;
     private String err;
-    private List<Jicha_leibie_model.Data> data;
+    private List<Data> data;
 
 
     public void setResult(String result) {
@@ -26,10 +27,26 @@ public class tijiao_result_model {
         return err;
     }
 
-    public void setData(List<Jicha_leibie_model.Data> data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
-    public List<Jicha_leibie_model.Data> getData() {
+    public List<Data> getData() {
         return data;
+    }
+
+
+    public static class Data {
+
+        public String getResult_code() {
+            return result_code;
+        }
+
+        public void setResult_code(String result_code) {
+            this.result_code = result_code;
+        }
+
+        private String result_code;
+
+
     }
 }

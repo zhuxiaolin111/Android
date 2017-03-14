@@ -3,11 +3,11 @@
     <string name="app_name">华发稽查</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
-    <string name="往年停供数数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
-    <string name="稽查项目数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
-    <string name="稽查类别数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
-    <string name="楼座内客户信息数据下载接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
-    <string name="上传数据接口">"http://qy.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="往年停供数数据下载接口">"http://syhf.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="稽查项目数据下载接口">"http://syhf.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="稽查类别数据下载接口">"http://syhf.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="楼座内客户信息数据下载接口">"http://syhf.eheat.com.cn/handler/inspectionservice.ashx"</string>
+    <string name="上传数据接口">"http://syhf.eheat.com.cn/handler/inspectionservice.ashx"</string>
     <string name="公司名称">"沈阳华发热力有限公司"</string>
     <string name="测试">"辽宁北软测试"</string>
     <string name="title_activity_login">Sign in</string>

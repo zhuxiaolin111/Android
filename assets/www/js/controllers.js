@@ -21,6 +21,7 @@ app.controller('searchCtrl', function($scope, $rootScope, $http, $location, sear
 
 
 	$http.post('http://'+hostname+'/weixinservice.ashx', data).success(function(res){
+	   // alert(JSON.stringify(res));
 		company = res[0].companyname;
 
 		Operator = res[0].username;
@@ -49,6 +50,7 @@ app.controller('searchCtrl', function($scope, $rootScope, $http, $location, sear
 	}
 
 	$scope.search = function(searchName){
+	//alert(searchName);
 		console.log($scope.bushuSel);
 		if($scope.bushuSel == undefined){
 			alert('请选择部署条件');
@@ -72,6 +74,7 @@ app.controller('searchCtrl', function($scope, $rootScope, $http, $location, sear
 			var type = '小区'
 			showLoading();
 			searchService.doSearch(searchName, type).then(function(res){
+			  //  alert(JSON.stringify(res));
 				localStorage.building = JSON.stringify(res.Data);
 				$scope.buildings = res.Data;
 			})
@@ -1441,7 +1444,7 @@ app.controller('loginCtrl', function($scope, $location, $routeParams, $rootScope
 				return;
 			}else{
 				localStorage.userid = res.userid;
-				localStorage.agentid = 25;
+				localStorage.agentid = 3;
 				$location.path('/search');
 			}
 			

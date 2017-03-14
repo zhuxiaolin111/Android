@@ -1,5 +1,5 @@
 //var hostname = window.location.host;
-var hostname = 'qy.eheat.com.cn';
+var hostname = 'syhf.eheat.com.cn';
 var ajaxUrl = 'http://'+hostname+'/handler/inspectionservice.ashx';
 var dispatchUrl = 'http://'+hostname+'/dispatchservice.ashx';
 var app = angular.module('check', ["ngRoute"]).run(function($rootScope) {

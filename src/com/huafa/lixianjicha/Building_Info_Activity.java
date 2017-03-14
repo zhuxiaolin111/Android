@@ -434,7 +434,7 @@ public class Building_Info_Activity extends baseActivty {
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("method", "JC_GetSuperviseItem")
-                .add("Company", getString(R.string.测试))
+                .add("Company", getString(R.string.公司名称))
                 .build();
         Request request = new Request.Builder()
                 .url(getString(R.string.稽查项目数据下载接口))
@@ -468,7 +468,7 @@ public class Building_Info_Activity extends baseActivty {
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("method", "JC_GetSuperviseType")
-                .add("Company", getString(R.string.测试))
+                .add("Company", getString(R.string.公司名称))
                 .build();
         Request request = new Request.Builder()
                 .url(getString(R.string.稽查类别数据下载接口))
@@ -747,7 +747,7 @@ public class Building_Info_Activity extends baseActivty {
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("method", "JC_GetBuildingRoomList")
-                .add("Company", getString(R.string.测试))
+                .add("Company", getString(R.string.公司名称))
                 .add("BuildingID", str1)
                 .add("QueryType", "")
                 .build();

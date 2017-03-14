@@ -1,6 +1,5 @@
 package com.huafa.lixianjicha;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,8 +29,8 @@ public abstract class baseActivty extends AppCompatActivity {
                         b.setTitle("作者");
                         b.setMessage("朱晓琳");
                         b.create().show();*/
-                        Intent intent=new Intent(baseActivty.this,shangYiCiJiChaJiLu.class);
-                        startActivity(intent);
+             /*           Intent intent=new Intent(baseActivty.this,shangYiCiJiChaJiLu.class);
+                        startActivity(intent);*/
                         break;
                     case  R.id.sousuo:
 
