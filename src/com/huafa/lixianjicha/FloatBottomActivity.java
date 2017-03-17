@@ -55,7 +55,7 @@ public class FloatBottomActivity extends Activity {
         xiangcebtn = (Button) findViewById(R.id.btn_pick_photo);
         quxiaobtn = (Button) findViewById(R.id.btn_cancel);
 
-        localTempImgFileName = DateFormat.format("yyyyMMdd_hhmmss",Calendar.getInstance(Locale.CHINA)) + ".jpg";
+        localTempImgFileName = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
         localTempImgDir = "/sdcard/Image/";
 
         paizhaobtn.setOnClickListener(new View.OnClickListener() {
@@ -71,18 +71,18 @@ public class FloatBottomActivity extends Activity {
                     return;
                 }
                 try {
-                    File dir=new File(Environment.getExternalStorageDirectory() + "/"+localTempImgDir);
-                    if(!dir.exists())dir.mkdirs();
+                    File dir = new File(Environment.getExternalStorageDirectory() + "/" + localTempImgDir);
+                    if (!dir.exists()) dir.mkdirs();
 
-                    Intent intent=new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f=new File(dir, localTempImgFileName);//localTempImgDir和localTempImageFileName是自己定义的名字
-                    Uri u=Uri.fromFile(f);
+                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(dir, localTempImgFileName);//localTempImgDir和localTempImageFileName是自己定义的名字
+                    Uri u = Uri.fromFile(f);
                     intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
                     startActivityForResult(intent, 2);
                 } catch (ActivityNotFoundException e) {
 // TODO Auto-generated catch block
-                    Toast.makeText(FloatBottomActivity.this, "没有找到储存目录",Toast.LENGTH_LONG).show();
+                    Toast.makeText(FloatBottomActivity.this, "没有找到储存目录", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -113,41 +113,40 @@ public class FloatBottomActivity extends Activity {
         //获取图片路径
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
-                String[] filePathColumns = {MediaStore.Images.Media.DATA};
-                Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+            String[] filePathColumns = {MediaStore.Images.Media.DATA};
+            Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
 
-                if (c.moveToFirst()){
-                    int column_index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    String imagePath = c.getString(column_index);
+            if (c.moveToFirst()) {
+
+                int column_index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                String imagePath = c.getString(column_index);
 //                    将生成的图片回传
-                    Intent intent = new Intent();
-                    intent.putExtra("result", imagePath);
-                    setResult(1001, intent);
-                }
-                finish();
-                c.close();
-
+                Intent intent = new Intent();
+                intent.putExtra("result", imagePath);
+                setResult(1001, intent);
             }
+            finish();
+            c.close();
 
-
+        }
         //获取拍照的图片的回调方法
         if (resultCode == Activity.RESULT_OK) {
-            if (data == null){
+            if (data == null) {
                 //由于指定了目标uri，存储在目标uri，intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 // 通过目标uri，找到图片
                 // 对图片的缩放处理
                 // 操作
-                File f=new File(Environment.getExternalStorageDirectory() +localTempImgDir+localTempImgFileName);
+                File f = new File(Environment.getExternalStorageDirectory() + localTempImgDir + localTempImgFileName);
                 try {
-                        Uri uri = Uri.parse(android.provider.MediaStore.Images.Media.insertImage(getContentResolver(),
-                                        f.getAbsolutePath(), null, null));
-                        Intent intent = new Intent();
-                        intent.setData(uri);
-                        setResult(1002, intent);
-                        finish();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Uri uri = Uri.parse(android.provider.MediaStore.Images.Media.insertImage(getContentResolver(),
+                            f.getAbsolutePath(), null, null));
+                    Intent intent = new Intent();
+                    intent.setData(uri);
+                    setResult(1002, intent);
+                    finish();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

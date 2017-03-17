@@ -52,25 +52,26 @@ public  class Wangnian_shuju extends baseActivty {
 
     public void set_wangnian_listView(){
         List<Map<String,String>> listItem = new ArrayList<>();
-
         s = wangnian_model.getData().size();
+        if(s>1){
+            for (int i = 0; i < s; i++) {
 
-        for (int i = 0; i < s; i++) {
+                if ("停".equals(wangnian_model.getData().get(i).getC_Mark()) &&
+                        "无变化".equals(wangnian_model.getData().get(i).getC_Mark_Now())) {
+                    Map<String,String> item = new HashMap<>();
+                    item.put("bianhao", wangnian_model.getData().get(i).getC_RoomNum());
+                    item.put("xingming", wangnian_model.getData().get(i).getC_OwnerName());
+                    item.put("famenzhuangtai", wangnian_model.getData().get(i).getC_Mark());
+                    item.put("mianji", String.valueOf(wangnian_model.getData().get(i).getM_Area()));
+                    item.put("qianfeijine", String.valueOf(wangnian_model.getData().get(i).getM_Total()));
+                    item.put("fangjianhao",String.valueOf(wangnian_model.getData().get(i).getI_RoomID()));
+                    item.put("youwubianhua",wangnian_model.getData().get(i).getC_Mark_Now());
 
-            if ("停".equals(wangnian_model.getData().get(i).getC_Mark()) &&
-                    "无变化".equals(wangnian_model.getData().get(i).getC_Mark_Now())) {
-                Map<String,String> item = new HashMap<>();
-                item.put("bianhao", wangnian_model.getData().get(i).getC_RoomNum());
-                item.put("xingming", wangnian_model.getData().get(i).getC_OwnerName());
-                item.put("famenzhuangtai", wangnian_model.getData().get(i).getC_Mark());
-                item.put("mianji", String.valueOf(wangnian_model.getData().get(i).getM_Area()));
-                item.put("qianfeijine", String.valueOf(wangnian_model.getData().get(i).getM_Total()));
-                item.put("fangjianhao",String.valueOf(wangnian_model.getData().get(i).getI_RoomID()));
-                item.put("youwubianhua",wangnian_model.getData().get(i).getC_Mark_Now());
-
-                listItem.add(item);
-                jishu_s += 1;
+                    listItem.add(item);
+                    jishu_s += 1;
+                }
             }
+
         }
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this,listItem,R.layout.user_info_new,

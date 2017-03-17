@@ -19,10 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.huafa.model.SQLite_Jicha_Model;
 
 import java.io.ByteArrayInputStream;
@@ -90,11 +86,6 @@ public class User_Info extends baseActivty {
     //图片转码后的字符串
     private String bitmap1_zhuanma, bitmap2_zhuanma, bitmap3_zhuanma;
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void initContentView(Bundle savedInstanceState) {
@@ -263,9 +254,7 @@ public class User_Info extends baseActivty {
 
         //设置UI
         initView();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     //复写关闭Activity方法
@@ -433,10 +422,7 @@ public class User_Info extends baseActivty {
         fangwuchaoxiang.setText(fangwuchaoxiangStr);
         yewuzhuangtai.setText(yewuzhuangtaiStr);
         jichajilu.setText(jichajiluStr);
-
     }
-
-
     //设置3个存放照片的按钮
     public void button_listener() {
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -501,7 +487,6 @@ public class User_Info extends baseActivty {
         });
     }
 
-
     //复写拍照存放照片和从相册选取照片的回调功能
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -513,8 +498,6 @@ public class User_Info extends baseActivty {
             bm1 = BitmapFactory.decodeFile(imagepath);
             Bitmap biliyasuo = comp(bm1);
             ((ImageView) findViewById(R.id.image1)).setImageBitmap(biliyasuo);
-            System.out.println(bm1.getByteCount());
-
 
         }
         if (requestCode == 22 && resultCode == 1001) {
@@ -649,10 +632,10 @@ public class User_Info extends baseActivty {
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 100;
 //		Log.i(test,原始大小 + baos.toByteArray().length);
-        while (baos.toByteArray().length / 1024 > 100) { // 循环判断如果压缩后图片是否大于(maxkb)50kb,大于继续压缩
+        while (baos.toByteArray().length / 1024 >100) { // 循环判断如果压缩后图片是否大于(maxkb)50kb,大于继续压缩
 //			Log.i(test,压缩一次!);
             baos.reset();// 重置baos即清空baos
-            options -= 15;// 每次都减少3
+            options -= 10;// 每次都减少3
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
         }
 //		Log.i(test,压缩后大小 + baos.toByteArray().length);
@@ -675,38 +658,18 @@ public class User_Info extends baseActivty {
     }
 
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("User_Info Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
+
 
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+
     }
 }

@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -26,10 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.huafa.model.Buliding_info_model;
 import com.huafa.model.Jicha_leibie_model;
 import com.huafa.model.Jicha_xiangmu_model;
@@ -90,7 +85,7 @@ public class Building_Info_Activity extends baseActivty {
     private Button tijiaoquanbushujuBtn;
 
     //获取h5页面传递过来的数据
-    private String str1,str2;
+    private String str1, str2;
 
     //红绿灯按钮的flag
     private int flag_hong = 0;
@@ -174,24 +169,21 @@ public class Building_Info_Activity extends baseActivty {
     private int mYear;
 
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
     /* 进度条 */
     private ProgressDialog myDialog;
-    int count=0;//存储进度条进度
+    int count = 0;//存储进度条进度
+
     @Override
     protected void initContentView(Bundle savedInstanceState) {
-       // super.onCreate(savedInstanceState);
+        // super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building__info_);
 
         rec();
 
         str1 = new String(this.getIntent().getStringExtra("buildid"));
-        str2=new String(this.getIntent().getStringExtra("operator"));
-        Common.operator=str2;
+        str2 = new String(this.getIntent().getStringExtra("operator"));
+        Common.operator = str2;
 
         //显示基础数据的4个按钮
         zonghushu = (TextView) findViewById(R.id.zonghushu);
@@ -234,7 +226,6 @@ public class Building_Info_Activity extends baseActivty {
         //提交全部数据按钮的点击事件
         tijiaoshuju();
 
-
         //往年停供的数据模型解析
         wangniantinggong_jiexi();
         //取得楼座中客户的个人缴费情况
@@ -249,19 +240,14 @@ public class Building_Info_Activity extends baseActivty {
         //判断按钮是否可以点击(ListView为空时设为无法点击)
 
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
-
 
 
     /**
      * 圆形进度条测试..
      */
     public void circle() {
-       myDialog = new ProgressDialog(Building_Info_Activity.this); // 获取对象
+        myDialog = new ProgressDialog(Building_Info_Activity.this); // 获取对象
         myDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // 设置样式为圆形样式
         myDialog.setTitle("友情提示"); // 设置进度条的标题信息
         myDialog.setMessage("数据加载中，请稍后..."); // 设置进度条的提示信息
@@ -307,11 +293,11 @@ public class Building_Info_Activity extends baseActivty {
         new Thread() {
             public void run() {
                 while (count <= 100) {
-                    myDialog.setProgress(count+=2);
+                    myDialog.setProgress(count += 2);
                     try {
                         Thread.sleep(100);  //暂停 0.1秒
                     } catch (Exception e) {
-                        Log.i("msg","线程异常..");
+                        Log.i("msg", "线程异常..");
                     }
                 }
             }
@@ -388,7 +374,7 @@ public class Building_Info_Activity extends baseActivty {
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("method", "JC_GetBuildingRoomList")
-                .add("Company", getString(R.string.测试))
+                .add("Company", getString(R.string.公司名称))
                 .add("BuildingID", str1)
                 .add("QueryType", "")
                 .add("ChargeYear", String.valueOf(mYear - 1) + "-" + String.valueOf(mYear))
@@ -402,26 +388,27 @@ public class Building_Info_Activity extends baseActivty {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 wangnianyonghushuju_Str = response.body().string();
                 wangniantinggong_model = JSON.parseObject(wangnianyonghushuju_Str, Buliding_info_model.class);
-
                 wangnianting_s = wangniantinggong_model.getData().size();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < wangnianting_s; i++) {
-                            if ("停".equals(wangniantinggong_model.getData().get(i).getC_Mark()) &&
-                                    "无变化".equals(wangniantinggong_model.getData().get(i).getC_Mark_Now())) {
-                                wangniantinggong_Num += 1;
+                if (wangnianting_s > 1) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (int i = 0; i < wangnianting_s; i++) {
+                                if ("停".equals(wangniantinggong_model.getData().get(i).getC_Mark()) &&
+                                        "无变化".equals(wangniantinggong_model.getData().get(i).getC_Mark_Now())) {
+                                    wangniantinggong_Num += 1;
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
                 Message message = new Message();
                 message.what = 2;
                 handler.sendEmptyMessage(2);
@@ -479,7 +466,7 @@ public class Building_Info_Activity extends baseActivty {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
             }
 
             @Override
@@ -620,7 +607,7 @@ public class Building_Info_Activity extends baseActivty {
                                     R.id.qianfeijine, R.id.fangjianhao, R.id.youwubianhua});
                     list = (ListView) findViewById(R.id.userinfolistview);
                     //变换item的颜色
-                    list.setBackgroundColor(Color.parseColor("#84a2d4"));
+                    list.setBackgroundColor(Color.parseColor("#50b225"));
                     list.setAdapter(simpleadapter);
                     list_click(list);
                 }
@@ -725,7 +712,7 @@ public class Building_Info_Activity extends baseActivty {
                                 intent.putExtra("yewuzhuangtai", buliding_info_model.getData().get(i1).getC_Mark());
                                 intent.putExtra("jichajilu", buliding_info_model.getData().get(i1).getPeccantCount());
                                 intent.putExtra("roomid", String.valueOf(buliding_info_model.getData().get(i1).getI_RoomID()));
-                                intent.putExtra("operator",str2);
+                                intent.putExtra("operator", str2);
                                 //发送稽查项目和稽查类别数据
                                 intent.putExtra("jichaxiangmu", jichaxiangmu_arr);
                                 intent.putExtra("jichaleibie", jichaleibie_arr);
@@ -877,40 +864,19 @@ public class Building_Info_Activity extends baseActivty {
     }
 
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Building_Info_ Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
+
 
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+
     }
 
 

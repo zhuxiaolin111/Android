@@ -14,10 +14,7 @@
         android:layout_height="10dp"
         >
     </LinearLayout>
-<WebView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/webview"></WebView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +64,7 @@
                 android:id="@+id/huifuBtn"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@mipmap/normol_84a2d4"
+                android:background="@drawable/normol_84a2d4"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 />
@@ -205,7 +202,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="经年停供数"
+                android:text="往年停供数"
                 android:textColor="#000"
                 android:textSize="15sp"
                 android:padding="5dp"
