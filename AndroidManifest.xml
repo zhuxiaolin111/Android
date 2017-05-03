@@ -90,8 +90,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-
-
         <service android:name=".LocationService"/>
 
         <activity

@@ -16,8 +16,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
-
     }
+
 
     //第一次创建数据库时会调用这个方法
     //创建表

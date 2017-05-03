@@ -195,21 +195,6 @@ public class Show_Tijiao_Data extends baseActivty {
                     public void onResponse(okhttp3.Call call, Response response) throws IOException {
                         result_str = response.body().string();
                         Log.d("result",result_str);
-               /*         mTijiao_result_model = JSON.parseObject(result_str, tijiao_result_model.class);
-                        result_i = mTijiao_result_model.getData().size();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0; i < result_i; i++) {
-                                    result_arr.add(mTijiao_result_model.getData().get(i).getResult_code());
-                                    Log.d("result", result_str);
-                                }
-                                //做一个Handle,已在数据请求完以后更新4个显示基础数据的按钮
-                                Message message = new Message();
-                                message.what = 1;
-                                handler.sendEmptyMessage(1);
-                            }
-                        });*/
 
                     }
                 });

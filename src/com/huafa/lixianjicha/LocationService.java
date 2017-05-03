@@ -97,7 +97,5 @@ public class LocationService extends IntentService implements LocationListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-
 
 }

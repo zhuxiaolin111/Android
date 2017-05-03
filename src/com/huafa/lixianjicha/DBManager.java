@@ -111,6 +111,8 @@ public class DBManager {
     public void delete(){
         db.execSQL("delete from jicha ");
     }
+
+
     //关闭数据库
     public void closeDB(){
         db.close();
