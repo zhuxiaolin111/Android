@@ -85,7 +85,7 @@ public class DBManager {
     }
 
 
-    //搜索数据库方法
+    //搜索数据库方法  今日订单
     public Cursor search(String string,String lieming){
         String sql = "select * from jicha where " + lieming + " = ?";
         Cursor c = db.rawQuery(sql,new String[]{string});
